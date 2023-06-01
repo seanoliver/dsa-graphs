@@ -66,13 +66,48 @@ class Graph {
     // add start to nodesSeen
     // add start's adjacent nodes to stack
 
+    let searchStack = [start];
+    let visitedNodes = new Set();
+
+    while (searchStack.length) {
+      let currentNode = searchStack.pop();
+
+      visitedNodes.add(currentNode.value);
+
+      for (let adj of currentNode.adjacent) {
+        if (!visitedNodes.has(adj.value)) {
+          searchStack.push(adj);
+        }
+      }
+    }
+
+    return [...visitedNodes];
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {
+    let searchQueue = [start];
+    let visitedNodes = new Set();
+
+    while (searchQueue.length) {
+      let currentNode = searchQueue.shift();
+
+      visitedNodes.add(currentNode.value);
+
+      for (let adj of currentNode.adjacent) {
+        if (!visitedNodes.has(adj.value)) {
+          searchQueue.push(adj);
+        }
+      }
+    }
+
+    return [...visitedNodes];
+  }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end) {
+
+  }
 }
 
 module.exports = { Graph, Node }

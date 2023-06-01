@@ -104,44 +104,70 @@ class Graph {
 
 	/** find the distance of the shortest path from the start vertex to the end vertex */
 	distanceOfShortestPath(start, end) {
+    let searchQueue = [start];  // [H]
+    let visitedNodes = new Set();  // {R}
 
-		if (start.adjacent.has(end)) return 1;
-    if (start.adjacent.length === 0 || end.adjacent.length === 0) return undefined;
+    while (searchQueue.length) {
+      let currentNode = searchQueue.shift();
+
+      visitedNodes.add(currentNode);
 
 
-    let distance = 0;
-		let distances = [];
-		for (const adjacentNode of start.adjacent) {
-      console.log('distance', distance);
-      console.log('adjacentNode', adjacentNode);
 
-      this.distanceOfShortestPath(adjacentNode, end);
-
-      // returned an array of distances
-		}
-    // return min of distances
-
-    return distance;
+    }
   }
 }
+
+  // build graph
+    //
+    //            R
+    //         /  |  \
+    //        I - T - H
+    //                |
+    //                M
+    //
 
 let graph = new Graph();
 
 let r = new Node('R');
-let i = new Node('I');
-let t = new Node('T');
+// let i = new Node('I');
+// let t = new Node('T');
 let h = new Node('H');
 let m = new Node('M');
 
-graph.addVertices([r, i, t, h, m]);
+// graph.addVertices([r, i, t, h, m]);
+graph.addVertices([r, h, m]);
 
-graph.addEdge(r, i);
-graph.addEdge(r, t);
+// graph.addEdge(r, i);
+// graph.addEdge(r, t);
 graph.addEdge(r, h);
-graph.addEdge(i, t);
-graph.addEdge(t, h);
+// graph.addEdge(i, t);
+// graph.addEdge(t, h);
 graph.addEdge(h, m);
 
 console.log(graph.distanceOfShortestPath(r, m));
 
 module.exports = { Graph, Node };
+
+
+
+
+// debugger;
+// 		if (start.adjacent.has(end)) return 1;
+//     if (start.adjacent.length === 0 || end.adjacent.length === 0) return 0;
+
+
+//     let distance = 0; // 1
+// 		// let distances = [];
+// 		for (const adjacentNode of start.adjacent) {  // start.adjacent = { H }
+//       console.log('distance', distance);
+//       console.log('adjacentNode', adjacentNode);
+
+//       if (adjacentNode.adjacent.length) distance++;
+//       distance += this.distanceOfShortestPath(adjacentNode, end);
+
+//       // returned an array of distances
+// 		}
+//     // return min of distances
+
+//     return distance;

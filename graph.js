@@ -104,17 +104,26 @@ class Graph {
 
 	/** find the distance of the shortest path from the start vertex to the end vertex */
 	distanceOfShortestPath(start, end) {
-    let searchQueue = [start];  // [H]
+    if (!end.adjacent) return undefined;
+    if (!start.adjacent) return undefined;
+
+    let searchQueue = [[start, 0]];  // [H]
     let visitedNodes = new Set();  // {R}
 
     while (searchQueue.length) {
-      let currentNode = searchQueue.shift();
+      let [currentNode, distance] = searchQueue.shift();
+
+      if (currentNode === end) return distance;
 
       visitedNodes.add(currentNode);
 
-
-
+			for (let adj of currentNode.adjacent) {
+				if (!visitedNodes.has(adj.value)) {
+					searchQueue.push([adj, distance + 1]);
+				}
+			}
     }
+    return undefined;
   }
 }
 
@@ -130,22 +139,25 @@ class Graph {
 let graph = new Graph();
 
 let r = new Node('R');
-// let i = new Node('I');
-// let t = new Node('T');
+let i = new Node('I');
+let t = new Node('T');
 let h = new Node('H');
 let m = new Node('M');
 
-// graph.addVertices([r, i, t, h, m]);
+graph.addVertices([r, i, t, h, m]);
 graph.addVertices([r, h, m]);
 
-// graph.addEdge(r, i);
-// graph.addEdge(r, t);
+graph.addEdge(r, i);
+graph.addEdge(r, t);
 graph.addEdge(r, h);
-// graph.addEdge(i, t);
-// graph.addEdge(t, h);
+graph.addEdge(i, t);
+graph.addEdge(t, h);
 graph.addEdge(h, m);
 
-console.log(graph.distanceOfShortestPath(r, m));
+// console.log(graph.distanceOfShortestPath(r, m));
+// console.log(graph.distanceOfShortestPath(t, r));
+// console.log(graph.distanceOfShortestPath(t, m));
+console.log(graph.distanceOfShortestPath(t, "rogue node"));
 
 module.exports = { Graph, Node };
 
